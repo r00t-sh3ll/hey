@@ -1,0 +1,26 @@
+variables:
+  DOCKER_TLS_CERTDIR: ''
+
+image: docker:19.03.0
+services:
+  - docker:19.03.0-dind
+stages:
+  - build-image
+
+.build-image:
+  stage: build-image
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build --pull -t $CI_REGISTRY_IMAGE:$TAG .
+    - docker push $CI_REGISTRY_IMAGE:$TAG
+
+
+build-latest:
+  extends: .build-image
+  before_script:
+    - export TAG=$CI_COMMIT_REF_NAME
+  only:
+    - master
+
+
+
