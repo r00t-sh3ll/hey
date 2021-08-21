@@ -21,6 +21,7 @@ stages:
     - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
     - docker build --pull -t $DOCKERHUB_USER/$IMAGE_NAME:$TAG .
     - docker push $DOCKERHUB_USER/$IMAGE_NAME:$TAG
+    - echo "docker image URL: $DOCKERHUB_USER/$IMAGE_NAME:$TAG"
 
 
 .build-master:
