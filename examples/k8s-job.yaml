@@ -13,7 +13,9 @@ spec:
       restartPolicy: Never
       containers:
       - name: hey
-        image: r00tsh3llll/hey:latest
+        image: docker.io/r00tsh3llll/hey:latest
         imagePullPolicy: IfNotPresent
+        command: ["/hey"]
+        args: ["-n", "2000", "-c", "500", "https://www.sendo.vn"]
 
 
