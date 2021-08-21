@@ -18,7 +18,6 @@ stages:
 .build-image-dockerhub:
   stage: build-image
   script:
-    - 
     - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
     - docker build --pull -t $DOCKERHUB_USER/$IMAGE_NAME:$TAG .
     - docker push $DOCKERHUB_USER/$IMAGE_NAME:$TAG
