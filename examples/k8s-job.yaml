@@ -1,1 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hey
+spec:
+  completions: 3
+  parallelism: 3
+  backoffLimit: 1 # number of retries before throwing error
+  #activeDeadlineSeconds: 10 # time to allow job to run
+  ttlSecondsAfterFinished: 10
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: hey
+        image: r00tsh3llll/hey:latest
+        imagePullPolicy: IfNotPresent
+
 
