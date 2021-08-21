@@ -1,5 +1,6 @@
 variables:
   DOCKER_TLS_CERTDIR: ''
+  IMAGE_NAME: hey
 
 image: docker:19.03.0
 services:
@@ -14,13 +15,25 @@ stages:
     - docker build --pull -t $CI_REGISTRY_IMAGE:$TAG .
     - docker push $CI_REGISTRY_IMAGE:$TAG
 
+.build-image-dockerhub:
+  stage: build-image
+  script:
+    - 
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN
+    - docker build --pull -t $DOCKERHUB_USER/$IMAGE_NAME:$TAG .
+    - docker push $DOCKERHUB_USER/$IMAGE_NAME:$TAG
 
-build-latest:
+
+.build-master:
   extends: .build-image
   before_script:
     - export TAG=$CI_COMMIT_REF_NAME
   only:
     - master
 
-
-
+build-latest:
+  extends: .build-image-dockerhub
+  before_script:
+    - export TAG=latest
+  only:
+    - master
